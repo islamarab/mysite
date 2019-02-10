@@ -3,10 +3,11 @@
 {% block title %}My Blog{% endblock %}
 
 {% block content %}
-    <h1 xmlns="http://www.w3.org/1999/html">My Blog</h1>
+    <a href="{% url "blog:post_list"  %}" ><h1>My Blog</h1></a>
     {% if tag %}
         <h2>Posts tagged with "{{ tag.name }}"</h2>
     {% endif %}
+
     {% for post in posts %}
         <h2>
             <a href="{{ post.get_absolute_url }}">
@@ -26,7 +27,9 @@
             Published {{ post.publish }} by {{ post.author }} </br>
             Updated {{ post.updated }}
         </p>
-        {{ post.body|truncatewords:30|linebreaks }}
+        {{ post.body|truncatechars:50|linebreaks }}
+        <hr>
     {% endfor %}
+
     {% include "pagination.html" with page=posts %}
 {% endblock %}
